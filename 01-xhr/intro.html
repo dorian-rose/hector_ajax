@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="boton">boton</button>
+    <section id="seccion"></section>
+
+
+
+    <script>
+
+        const seccion = document.querySelector('#seccion');
+        const boton = document.querySelector('#boton');
+        const xhr = new XMLHttpRequest()
+
+        boton.addEventListener('click', () => {
+
+            xhr.open('GET', 'https://jsonplaceholder.typicode.com/posts')
+
+            xhr.addEventListener('readystatechange', () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+
+                    console.log(xhr.responseText)
+
+                    const respuesta = JSON.parse(xhr.responseText)
+
+                    pintar(respuesta)
+
+                }
+
+            })
+
+            xhr.send()
+
+        })
+
+
+
+
+        const pintar = (respuesta) => {
+            respuesta.forEach(({ title, body }) => {
+                seccion.innerHTML += `<h2>${title}</h2>
+                                        <p>${body}</p>`
+
+            });
+        }
+
+    </script>
+</body>
+
+</html>
